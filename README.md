@@ -4,6 +4,9 @@ _This project has been created as part of the 42 curriculum by ajose-al._
 > Get Next Line - Reading a line from a file descriptor is way too tedious.
 
 This project consists of a C function that returns a line read from a file descriptor.
+```c
+char *get_next_line(int fd);
+```
 
 # Instructions
 #### Compile your Program with get_next_line.
