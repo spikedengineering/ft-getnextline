@@ -6,7 +6,7 @@
 /*   By: ajose-al <ajose-al@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/20 18:08:16 by ajose-al          #+#    #+#             */
-/*   Updated: 2026/11/24 07:03:44 by ajose-al         ###   ########.fr       */
+/*   Updated: 2026/11/24 09:19:42 by ajose-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,21 @@
 #  define BUFFER_SIZE 42
 # endif
 
+# ifndef NEW_LINE_CHAR
+#  define NEW_LINE_CHAR '\n'
+# endif
+
 typedef struct s_read_data
 {
-	unsigned int	readsize;
-	unsigned int	linelen;
-	char			*str;
+	size_t	readsize;
+	size_t	linelen;
+	size_t	plinelen;
+	size_t	alloc;
+	char	*str;
 }	t_read_data;
 
-size_t	ft_strlcpy(char *dst, const char *src, size_t size);
-size_t	ft_strlen(const char *s);
-char	*ft_strnjoin(char const *s1, char const *s2, size_t s2_len);
+char	*realloc_str(t_read_data data, char *buffer, size_t *alloc);
+char	*strncut(char *str, size_t n);
 
 char	*get_next_line(int fd);
 

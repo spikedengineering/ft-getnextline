@@ -6,58 +6,108 @@
 /*   By: ajose-al <ajose-al@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/20 19:47:41 by ajose-al          #+#    #+#             */
-/*   Updated: 2026/11/24 06:41:50 by ajose-al         ###   ########.fr       */
+/*   Updated: 2026/11/24 09:28:20 by ajose-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#include "get_next_line.h"
 
-size_t	ft_strlcpy(char *dst, const char *src, size_t size)
+static char	*realloc_and_free_str(t_read_data data, char *buffer, size_t *alloc)
 {
 	size_t	i;
-	size_t	src_len;
+	size_t	ii;
+	char	*newstr;
 
-	src_len = 0;
-	while (src[src_len])
-		src_len++;
-	if (!size)
-		return (src_len);
 	i = 0;
-	while (i < size - 1 && i < src_len)
+	newstr = malloc((*alloc + 1) * sizeof(char));
+	if (!newstr)
+		return (NULL);
+	while (i < data.plinelen)
 	{
-		dst[i] = src[i];
+		newstr[i] = data.str[i];
 		i++;
 	}
-	dst[i] = '\0';
-	return (src_len);
+	ii = 0;
+	while (ii < data.linelen)
+	{
+		newstr[i] = buffer[ii];
+		i++;
+		ii++;
+	}
+	newstr[i] = '\0';
+	free(data.str);
+	return (newstr);
 }
 
-size_t	ft_strlen(const char *s)
+static char	*append_str(t_read_data data, char *buffer)
 {
-	int	len;
+	size_t	i;
+	size_t	ii;
 
-	len = 0;
-	while (s[len])
-		len++;
-	return (len);
+	i = 0;
+	ii = data.plinelen;
+	while (i < data.linelen)
+	{
+		data.str[ii] = buffer[i];
+		i++;
+		ii++;
+	}
+	data.str[ii] = '\0';
+	return (data.str);
 }
 
-char	*ft_strnjoin(char const *s1, char const *s2, size_t s2_len)
+static char	*alloc_str(t_read_data data, char *buffer, size_t *alloc)
 {
-	size_t	s1_len;
-	char	*join;
+	size_t	i;
 
-	if (!s2)
+	i = 0;
+	data.str = malloc((*alloc + 1) * sizeof(char));
+	if (!data.str)
 		return (NULL);
-	if (s1)
-		s1_len = ft_strlen(s1);
+	while (i < data.linelen)
+	{
+		data.str[i] = buffer[i];
+		i++;
+	}
+	data.str[i] = '\0';
+	return (data.str);
+}
+
+char	*realloc_str(t_read_data data, char *buffer, size_t *alloc)
+{
+	size_t	palloc;
+	size_t	i;
+
+	palloc = *alloc;
+	while (*alloc <= data.linelen + data.plinelen)
+		(*alloc) *= 2;
+	i = 0;
+	if (!data.str)
+		return (alloc_str(data, buffer, alloc));
 	else
-		s1_len = 0;
-	join = malloc(s1_len + s2_len + 1 * sizeof(char));
-	if (!join)
+	{
+		if (*alloc > palloc)
+			return (realloc_and_free_str(data, buffer, alloc));
+		else
+			return (append_str(data, buffer));
+	}
+}
+
+char	*strncut(char *str, size_t n)
+{
+	char	*newstr;
+	size_t	i;
+
+	newstr = malloc((n + 1) * sizeof(char));
+	if (!newstr)
 		return (NULL);
-	if (s1)
-		ft_strlcpy(join, s1, s1_len + 1);
-	ft_strlcpy(join + s1_len, s2, s2_len + 1);
-	return (join);
+	i = 0;
+	while (i < n)
+	{
+		newstr[i] = str[i];
+		i++;
+	}
+	newstr[i] = '\0';
+	free(str);
+	return (newstr);
 }
