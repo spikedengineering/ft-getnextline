@@ -6,11 +6,19 @@
 /*   By: ajose-al <ajose-al@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/20 18:13:21 by ajose-al          #+#    #+#             */
-/*   Updated: 2026/11/23 06:04:36 by ajose-al         ###   ########.fr       */
+/*   Updated: 2026/11/24 07:03:17 by ajose-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
 #include "get_next_line.h"
+
+static unsigned int	get_read_size(char *buffer, int fd)
+{
+	if (*buffer)
+		return (ft_strlen(buffer));
+	return (read(fd, buffer, BUFFER_SIZE));
+}
 
 static unsigned int	get_line_len(char *buffer)
 {
@@ -18,102 +26,70 @@ static unsigned int	get_line_len(char *buffer)
 
 	i = 0;
 	while (buffer[i])
-	{
-		if (buffer[i] == '\n')
+		if (buffer[i++] == '\n')
 			return (i);
-		i++;
-	}
 	return (i);
 }
 
-static char	*get_prev_str(char *str, char *leftovers)
+void	shift_left_overs(char *buffer, unsigned int linelen, unsigned int rsize)
 {
-	if (str)
-		return (str);
-	else if (leftovers)
-		return (leftovers);
-	else
-		return (NULL);
-}
+	unsigned int	i;
 
-static char	*get_left_overs(unsigned int readsize, unsigned int i, char *buffer)
-{
-	if (i + 1 < readsize)
+	i = 0;
+	while (linelen < rsize)
 	{
-		if (buffer[i] == '\n')
-			return (ft_strdup(buffer + i + 1));
-		else
-			return (ft_strdup(buffer + i));
+		buffer[i] = buffer[linelen];
+		linelen++;
+		i++;
 	}
-	return (NULL);
-}
-
-static unsigned int	get_read_size(char *leftovers, char *buffer, int fd)
-{
-	if (leftovers)
-	{
-		ft_strlcpy(buffer, leftovers, BUFFER_SIZE);
-		return (ft_strlen(leftovers) + 1);
-	}
-	return (read(fd, buffer, BUFFER_SIZE));
+	buffer[i] = '\0';
 }
 
 char	*get_next_line(int fd)
 {
-	static char			*leftovers;
 	static char			buffer[BUFFER_SIZE + 1];
 	t_read_data			data;
 
-	data.prevstr = NULL;
 	data.str = NULL;
 	while (1)
 	{
-		data.readsize = get_read_size(leftovers, buffer, fd);
+		data.readsize = get_read_size(buffer, fd);
 		if (data.readsize <= 0)
 			return (NULL);
-		data.i = get_line_len(buffer);
-		if (leftovers)
-		{
-			free(leftovers);
-			leftovers = NULL;
-		}
-		data.prevstr = get_prev_str(data.str, leftovers);
-		data.str = ft_strjoin(data.prevstr, buffer, data.i + 1);
+		data.linelen = get_line_len(buffer);
+		data.str = ft_strnjoin(data.str, buffer, data.linelen);
 		if (!data.str)
 			return (NULL);
-		leftovers = get_left_overs(data.readsize, data.i, buffer);
-		if (buffer[data.i] == '\n')
+		if (buffer[data.linelen - 1] == '\n')
+		{
+			shift_left_overs(buffer, data.linelen, data.readsize);
 			return (data.str);
+		}
+		shift_left_overs(buffer, data.linelen, data.readsize);
 	}
 }
 
 //#include <fcntl.h>
-//#include <stdio.h>
 //int	main(void)
 //{
-//	int		fd;
-//	char	*str;
+//	int				fd;
+//	char			*str;
+//	unsigned int	i;
+//	unsigned int	repeat;
 //
 //	fd = open("loremipsum.txt", O_RDONLY);
 //	if (fd < 0)
 //		return (0);
-//	str = get_next_line(fd);
-//	printf("%s", str);
-//	free(str);
-//	str = get_next_line(fd);
-//	printf("%s", str);
-//	free(str);
-//	str = get_next_line(fd);
-//	printf("%s", str);
-//	free(str);
-//	str = get_next_line(fd);
-//	printf("%s", str);
-//	free(str);
-//	str = get_next_line(fd);
-//	printf("%s", str);
-//	free(str);
-//	str = get_next_line(fd);
-//	printf("%s", str);
-//	free(str);
+//	repeat = 9;
+//	i = 0;
+//	while (i < repeat)
+//	{
+//		str = get_next_line(fd);
+//		printf("%s", str);
+//		free(str);
+//		i++;
+//	}
+//	close(fd);
+//	printf("[LOG] Tried to get (%d) lines out of fd (%d).\n", repeat, fd);
 //	return (0);
 //}

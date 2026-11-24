@@ -9,8 +9,11 @@ char *get_next_line(int fd);
 ```
 
 # Instructions
-#### Compile your Program with get_next_line.
+#### Compile your Program with `get_next_line`.
 > with `get_next_line.h`, `get_next_line.c` and `get_next_line_utils.c` files inside your working directory.
+```c
+#include "get_next_line.h"
+```
 ```bash
 cc -Wall -Werror -Wextra get_next_line_utils.c get_next_line.c your_program_file.c
 ```
