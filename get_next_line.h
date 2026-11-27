@@ -6,7 +6,7 @@
 /*   By: ajose-al <ajose-al@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/20 18:08:16 by ajose-al          #+#    #+#             */
-/*   Updated: 2026/11/24 09:19:42 by ajose-al         ###   ########.fr       */
+/*   Updated: 2026/11/27 17:29:20 by ajose-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,21 +20,27 @@
 #  define BUFFER_SIZE 42
 # endif
 
-# ifndef NEW_LINE_CHAR
-#  define NEW_LINE_CHAR '\n'
+# ifndef BL_CHAR
+#  define BL_CHAR '\n'
+# endif
+
+# ifndef NULL_CHAR
+#  define NULL_CHAR '\0'
 # endif
 
 typedef struct s_read_data
 {
-	size_t	readsize;
-	size_t	linelen;
-	size_t	plinelen;
-	size_t	alloc;
+	long	readsize;
+	size_t	llen;
+	size_t	pllen;
 	char	*str;
 }	t_read_data;
 
-char	*realloc_str(t_read_data data, char *buffer, size_t *alloc);
-char	*strncut(char *str, size_t n);
+long	get_read_size(char *buffer, int fd);
+size_t	get_len(char *s, char terminator);
+char	*ft_strnjoinfree(char const *s1, char const *s2,
+			size_t s1l, size_t s2l);
+void	shift(char *buffer, size_t llen, size_t rsize);
 
 char	*get_next_line(int fd);
 

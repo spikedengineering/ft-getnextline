@@ -1,5 +1,3 @@
-> Work in Progress
-
 _This project has been created as part of the 42 curriculum by ajose-al._
 
 # Description
@@ -9,6 +7,10 @@ This project consists of a C function that returns a line read from a file descr
 ```c
 char *get_next_line(int fd);
 ```
+Working on this subject was a very fulfilling experience that allowed me to work more closely with file descriptors and memory management as a whole; introducing static variables; that are stored in `.bss` (when zero-initialized) and `.data` (when non-zero-initialized).
+
+During the various iterations of this project I also explored writting a realloc procedure, to avoid the extreme complexity of strjoin. I ended up giving up on that already working solution because of this project requirement:
+> Add all the helper functions you need in the `get_next_line_utils.c` file.
 
 # Instructions
 #### Compile your Program with `get_next_line`.
@@ -27,5 +29,5 @@ cc -Wall -Werror -Wextra get_next_line_utils.c get_next_line.c your_program_file
 ## AI Usage
 Although I'm not against AI; I do not directly use or recommend its usage for learning.
 
-This project was indirectly aided by AI in the form of development tools created by other people.
+This project was indirectly aided by AI in the form of development and testing tools creation and modification by me and other people.
 
