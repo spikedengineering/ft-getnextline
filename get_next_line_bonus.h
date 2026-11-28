@@ -6,7 +6,7 @@
 /*   By: ajose-al <ajose-al@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/20 18:08:16 by ajose-al          #+#    #+#             */
-/*   Updated: 2026/11/28 00:26:48 by ajose-al         ###   ########.fr       */
+/*   Updated: 2026/11/28 00:58:57 by ajose-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,10 @@
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 42
+# endif
+
+# ifndef MAX_FDS
+#  define MAX_FDS 1024
 # endif
 
 # ifndef BL_CHAR

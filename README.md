@@ -7,7 +7,7 @@ This project consists of a C function that returns a line read from a file descr
 ```c
 char *get_next_line(int fd);
 ```
-Working on this subject was a very fulfilling experience that allowed me to work more closely with file descriptors and memory management as a whole; introducing static variables; that get stored into `.bss` (when zero-initialized) and `.data` (when non-zero-initialized) memory sections.
+Working on this subject was a very fulfilling experience that allowed me to work more closely with file descriptors and memory management as a whole, introducing static variables; that get stored into `.bss` (when zero-initialized) and `.data` (when non-zero-initialized) memory sections.
 
 During the various iterations of this project I also explored writting a duplicating size realloc procedure, to avoid the extreme realocation complexity of strjoin. I ended up giving up on that already working solution because of this specific project requirement (that defines a limit of 1 function on the main file and 5 functions on the utils file):
 > Add all the helper functions you need in the `get_next_line_utils.c` file.

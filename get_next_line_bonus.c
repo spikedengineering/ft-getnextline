@@ -6,7 +6,7 @@
 /*   By: ajose-al <ajose-al@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/20 18:13:21 by ajose-al          #+#    #+#             */
-/*   Updated: 2026/11/28 00:55:43 by ajose-al         ###   ########.fr       */
+/*   Updated: 2026/11/28 00:59:54 by ajose-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char	*get_next_line(int fd)
 {
-	static char	buffer[1024][BUFFER_SIZE + 1];
+	static char	buffer[MAX_FDS][BUFFER_SIZE + 1];
 	t_read_data	data;
 
 	data.pllen = 0;
