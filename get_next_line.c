@@ -6,7 +6,7 @@
 /*   By: ajose-al <ajose-al@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/20 18:13:21 by ajose-al          #+#    #+#             */
-/*   Updated: 2026/11/27 23:04:13 by ajose-al         ###   ########.fr       */
+/*   Updated: 2026/11/28 00:35:33 by ajose-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ char	*get_next_line(int fd)
 //	char	*str;
 //	size_t	i;
 //	size_t	repeat_max;
-//	char	file[] = "giant_line.txt";
+//	char	file[] = "get_next_line.c";
 //	char	*pfile;
 //
 //	if (argc > 1)
@@ -60,7 +60,7 @@ char	*get_next_line(int fd)
 //	fd = open(pfile, O_RDONLY);
 //	if (fd < 0)
 //		return (0);
-//	repeat_max = 99;
+//	repeat_max = 999;
 //	i = 0;
 //	while (i < repeat_max)
 //	{
